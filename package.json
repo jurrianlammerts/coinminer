@@ -4,8 +4,7 @@
   "description": "a miner for the cmgt coin",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js --stack-size=1200",
-    "test": "jest --detectOpenHandles"
+    "start": "nodemon index.js"
   },
   "author": "Jurrian Lammerts",
   "license": "ISC",
@@ -14,7 +13,6 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
-    "jest": "^24.1.0",
     "nodemon": "^1.18.10"
   }
 }
