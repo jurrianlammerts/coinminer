@@ -1,3 +1,5 @@
+const sha256 = require('sha256');
+
 convertLetterToNumber = string => {
   let result = '';
   string.split('').forEach(c => {
@@ -37,44 +39,48 @@ splitArray = array => {
   let newArray = [];
   for (i < array.length; i < array.length; i += chunk) {
     const tempArray = array.slice(i, i + chunk);
-    // console.log(tempArray);
     newArray.push(tempArray);
   }
-  console.log(newArray);
+  return newArray;
 };
 
-recursion = (a, b) => {
-  let newBlock = [];
-  for (let i = 0; i < a.length; i += 1) {
-    let first = toNumber(a.slice(i, i + 1));
-    let second = toNumber(b.slice(i, i + 1));
-    let addedNumbers = first + second;
-    let result = addedNumbers % 10;
-    newBlock.push(result);
+calculateArrayBlocks = (array, calculatedArray = []) => {
+  if (!array.length) {
+    return [...calculatedArray];
   }
-  return newBlock;
+  if (!calculatedArray.length) {
+    if (array.length === 1) {
+      return array;
+    }
+    calculatedArray = [...array.shift()];
+  }
+  const nextArray = [...array.shift()];
+
+  const addedArrays = calculatedArray.map(
+    (number, i) => (parseInt(number, 10) + parseInt(nextArray[i], 10)) % 10
+  );
+
+  return calculateArrayBlocks(array, addedArrays);
 };
 
 Mod10 = hash => {
   // 1. text to unicode (ASCII)
   const unicodeString = convertLetterToNumber(hash);
-
   // 2. split numbers and put in array
   const array = splitStringToArray(unicodeString);
   const filledArray = fillArray(array);
-
   // 2.1 make array of arrays
   const splittedArray = splitArray(filledArray);
-
+  // 3. Take 2 blocks from the array
   // 4. add these blocks
-  const result = recursion(firstTen, secondTen);
   // 5. use these 10 numbers the same way as 4. with the last 10 numbers from 3.
-  // for (i = 0; i < filledArray.length; i + 10) {}
   // 6. repeat 5. until all numbers have been
-  // 7. toString(result)
-  // 8. sha257(7. result)
-
-  // !!! if block hasn't has 10 numbers add with 0,1,2,3,4,5,6,7,8,9
+  const newCode = calculateArrayBlocks(splittedArray);
+  // 7. toString
+  const newCodeString = newCode.join('');
+  // 8. sha257
+  const hashedString = sha256(newCodeString);
+  return hashedString;
 };
 
 module.exports = {

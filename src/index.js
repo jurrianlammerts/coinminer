@@ -7,10 +7,9 @@ const { Mod10 } = require('./functions');
 
 const mine = async () => {
   const { data } = await lastBlock();
-  // console.log(data)
-  // console.log(data.blockchain.hash);
 
-  Mod10(data.blockchain.hash);
+  const newHash = Mod10(data.blockchain.hash);
+  console.log(newHash);
 };
 
 app.set('port', port);
