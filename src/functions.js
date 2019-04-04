@@ -24,16 +24,28 @@ toNumber = string => {
 
 fillArray = array => {
   if (array.length % 10 != 0) {
-    for (i = 0; i < array.length % 10; i++) {
+    for (let i = 0; i < array.length % 10; i += 1) {
       array.push(i.toString());
     }
     return array;
   } else return;
 };
 
+splitArray = array => {
+  const chunk = 10;
+  let i = 0;
+  let newArray = [];
+  for (i < array.length; i < array.length; i += chunk) {
+    const tempArray = array.slice(i, i + chunk);
+    // console.log(tempArray);
+    newArray.push(tempArray);
+  }
+  console.log(newArray);
+};
+
 recursion = (a, b) => {
   let newBlock = [];
-  for (i = 0; i < a.length; i++) {
+  for (let i = 0; i < a.length; i += 1) {
     let first = toNumber(a.slice(i, i + 1));
     let second = toNumber(b.slice(i, i + 1));
     let addedNumbers = first + second;
@@ -51,19 +63,13 @@ Mod10 = hash => {
   const array = splitStringToArray(unicodeString);
   const filledArray = fillArray(array);
 
-  // 3. get the first two blocks of 10 numbers
-  const firstTen = array.slice(0, 10);
-  const secondTen = array.slice(11, 21);
-
-  // console.log(firstTen);
-  // console.log(secondTen);
+  // 2.1 make array of arrays
+  const splittedArray = splitArray(filledArray);
 
   // 4. add these blocks
   const result = recursion(firstTen, secondTen);
   // 5. use these 10 numbers the same way as 4. with the last 10 numbers from 3.
-  for(i = 0; i < filledArray.length; i + 10) {
-    
-  }
+  // for (i = 0; i < filledArray.length; i + 10) {}
   // 6. repeat 5. until all numbers have been
   // 7. toString(result)
   // 8. sha257(7. result)
