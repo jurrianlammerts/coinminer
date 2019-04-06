@@ -6,13 +6,15 @@
   "scripts": {
     "start": "npm-run-all --parallel watch:server watch:build",
     "watch:build": "webpack --watch",
-    "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\""
+    "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\"",
+    "test": "jest"
   },
   "author": "Jurrian Lammerts",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "jest": "^24.7.1",
     "sha256": "^0.2.0"
   },
   "devDependencies": {

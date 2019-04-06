@@ -1,5 +1,18 @@
 const sha256 = require('sha256');
 
+createString = newBlock => {
+  const { hash, data, nonce, timestamp } = newBlock.blockchain;
+  const from = data[0].from;
+  const to = data[0].to;
+  const amount = data[0].amount;
+  const dataTimestamp = data[0].timestamp;
+
+  const string = removeWhitespaces(
+    `${hash}${from}${to}${amount}${dataTimestamp}${timestamp}${nonce}`
+  );
+  return string;
+};
+
 convertLetterToNumber = string => {
   let result = '';
   string.split('').forEach(c => {
@@ -30,13 +43,14 @@ fillArray = array => {
       array.push(i.toString());
     }
     return array;
-  } else return;
+  } else return array;
 };
 
 splitArray = array => {
   const chunk = 10;
   let i = 0;
   let newArray = [];
+
   for (i < array.length; i < array.length; i += chunk) {
     const tempArray = array.slice(i, i + chunk);
     newArray.push(tempArray);
@@ -84,5 +98,6 @@ Mod10 = hash => {
 };
 
 module.exports = {
-  Mod10
+  Mod10,
+  createString
 };
