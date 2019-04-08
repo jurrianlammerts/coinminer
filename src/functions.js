@@ -1,6 +1,6 @@
 const sha256 = require('sha256');
 
-createString = newBlock => {
+const createString = newBlock => {
   const { hash, data, nonce, timestamp } = newBlock.blockchain;
   const from = data[0].from;
   const to = data[0].to;
@@ -10,34 +10,38 @@ createString = newBlock => {
   const string = removeWhitespaces(
     `${hash}${from}${to}${amount}${dataTimestamp}${timestamp}${nonce}`
   );
+  console.log(string);
   return string;
 };
 
-convertLetterToNumber = string => {
+const convertLetterToNumber = string => {
   let result = '';
-  string.split('').forEach(c => {
-    if (isNaN(c)) {
-      result += c.charCodeAt(0);
-    } else {
-      result += c;
-    }
-  });
+  string
+    .toString()
+    .split('')
+    .forEach(c => {
+      if (isNaN(c)) {
+        result += c.charCodeAt(0);
+      } else {
+        result += c;
+      }
+    });
   return result;
 };
 
-splitStringToArray = string => {
+const splitStringToArray = string => {
   return string.split('');
 };
 
-removeWhitespaces = string => {
+const removeWhitespaces = string => {
   return string.replace(/\s/g, '');
 };
 
-toNumber = string => {
+const toNumber = string => {
   return parseInt(string, 10);
 };
 
-fillArray = array => {
+const fillArray = array => {
   if (array.length % 10 != 0) {
     for (let i = 0; i < array.length % 10; i += 1) {
       array.push(i.toString());
@@ -46,7 +50,7 @@ fillArray = array => {
   } else return array;
 };
 
-splitArray = array => {
+const splitArray = array => {
   const chunk = 10;
   let i = 0;
   let newArray = [];
@@ -58,7 +62,7 @@ splitArray = array => {
   return newArray;
 };
 
-calculateArrayBlocks = (array, calculatedArray = []) => {
+const calculateArrayBlocks = (array, calculatedArray = []) => {
   if (!array.length) {
     return [...calculatedArray];
   }
@@ -77,9 +81,9 @@ calculateArrayBlocks = (array, calculatedArray = []) => {
   return calculateArrayBlocks(array, addedArrays);
 };
 
-Mod10 = hash => {
+const Mod10 = data => {
   // 1. text to unicode (ASCII)
-  const unicodeString = convertLetterToNumber(hash);
+  const unicodeString = convertLetterToNumber(data);
   // 2. split numbers and put in array
   const array = splitStringToArray(unicodeString);
   const filledArray = fillArray(array);

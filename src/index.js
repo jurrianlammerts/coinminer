@@ -3,13 +3,14 @@ const app = express();
 const port = 3000;
 
 const { lastBlock } = require('./api');
+const fakeBlock = require('../tests/data.test.json');
 const { Mod10, createString } = require('./functions');
 
 const mine = async () => {
-  const { data } = await lastBlock();
-  const newString = createString(data);
-  const newHash = Mod10(newString);
-  console.log(newHash);
+  // const { data } = await lastBlock();
+  const string = createString(fakeBlock);
+  const hash = Mod10(string);
+  console.log(hash);
 };
 
 app.set('port', port);
