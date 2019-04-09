@@ -131,7 +131,7 @@ const Mod10 = data => {
   // Make 2 blocks of 10
   // The first number is taken from both blocks
   // these are added together
-  // modulus 10 is taken from the result
+  // Modulus 10 is taken from the result
   // This is done 10 times for all numbers from both blocks of 10 numbers.
   // This produces a new set of 10 numbers
   // Repeat this until 10 numbers remain

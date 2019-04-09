@@ -16,7 +16,7 @@ const mine = async () => {
   const { data } = await lastBlock();
   // Make a string
   const string = createString(data);
-  // Hash String
+  // Hash the string
   const hash = Mod10(string);
   // Create a string without a nonce
   const stringWithoutNonce = createStringWithoutNonce(data, hash);
