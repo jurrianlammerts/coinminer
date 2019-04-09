@@ -10,8 +10,17 @@ const createString = newBlock => {
   const string = removeWhitespaces(
     `${hash}${from}${to}${amount}${dataTimestamp}${timestamp}${nonce}`
   );
-  console.log(string);
   return string;
+};
+
+const createStringWithoutNonce = (newBlock, hash) => {
+  const { from, to, amount, timestamp } = newBlock.transactions[0];
+  const timestampOld = newBlock.timestamp;
+
+  const newString = removeWhitespaces(
+    `${hash}${from}${to}${amount}${timestamp}${timestampOld}`
+  );
+  return newString;
 };
 
 const convertLetterToNumber = string => {
@@ -81,6 +90,35 @@ const calculateArrayBlocks = (array, calculatedArray = []) => {
   return calculateArrayBlocks(array, addedArrays);
 };
 
+const checkHash = hash => {
+  return hash.slice(0, 4) === '0000';
+};
+
+const waitASec = time => {
+  return new Promise(resolve => setTimeout(resolve, time));
+};
+
+const findNonce = async (hash, nonce = -1, delay = 3000) => {
+  const finalHash = Mod10(`${hash}${nonce.toString()}`);
+
+  if (checkHash(finalHash)) {
+    console.log('Done final hash & nonce: ' + finalHash + nonce);
+    return nonce;
+  }
+
+  const newNonce = nonce + 1;
+  let countDown = delay - 1;
+
+  if (countDown === 0) {
+    countDown = 3000;
+    // await waitASec(20);
+  }
+
+  return findNonce(hash, newNonce, countDown);
+};
+
+const postBlock = block => {};
+
 const Mod10 = data => {
   // 1. text to unicode (ASCII)
   const unicodeString = convertLetterToNumber(data);
@@ -103,5 +141,7 @@ const Mod10 = data => {
 
 module.exports = {
   Mod10,
-  createString
+  createString,
+  findNonce,
+  createStringWithoutNonce
 };

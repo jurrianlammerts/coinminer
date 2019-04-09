@@ -2,15 +2,24 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const { lastBlock } = require('./api');
+const { lastBlock, postBlock } = require('./api');
 const fakeBlock = require('../tests/data.test.json');
-const { Mod10, createString } = require('./functions');
+const {
+  Mod10,
+  createString,
+  createStringWithoutNonce,
+  findNonce
+} = require('./functions');
 
 const mine = async () => {
-  // const { data } = await lastBlock();
-  const string = createString(fakeBlock);
+  const { data } = await lastBlock();
+  const string = createString(data);
   const hash = Mod10(string);
-  console.log(hash);
+  const stringWithoutNonce = createStringWithoutNonce(data, hash);
+  console.log('here: ' + stringWithoutNonce);
+  const { finalHash, nonce } = await findNonce(stringWithoutNonce);
+  console.log(nonce);
+  console.log(finalHash);
 };
 
 app.set('port', port);
