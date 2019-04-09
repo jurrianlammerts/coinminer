@@ -17,9 +17,13 @@ const mine = async () => {
   const hash = Mod10(string);
   const stringWithoutNonce = createStringWithoutNonce(data, hash);
   console.log('here: ' + stringWithoutNonce);
-  const { finalHash, nonce } = await findNonce(stringWithoutNonce);
-  console.log(nonce);
-  console.log(finalHash);
+
+  setTimeout(async () => {
+    const { finalHash, nonce } = await findNonce(stringWithoutNonce);
+  }, 1000);
+
+  // console.log(nonce);
+  // console.log(finalHash);
 };
 
 app.set('port', port);
