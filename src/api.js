@@ -12,4 +12,4 @@ const postBlock = nonce => {
   });
 };
 
-module.exports = { lastBlock };
+module.exports = { lastBlock, postBlock };

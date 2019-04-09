@@ -100,9 +100,10 @@ const waitASec = time => {
 
 const findNonce = async (hash, nonce = -1, delay = 3000) => {
   const finalHash = Mod10(`${hash}${nonce.toString()}`);
+  console.log(finalHash, nonce);
 
   if (checkHash(finalHash)) {
-    console.log('Done final hash & nonce: ' + finalHash + nonce);
+    console.log(`Done, this is the nonce: ${nonce}`);
     return nonce;
   }
 
@@ -111,7 +112,7 @@ const findNonce = async (hash, nonce = -1, delay = 3000) => {
 
   if (countDown === 0) {
     countDown = 3000;
-    // await waitASec(20);
+    await waitASec(10);
   }
 
   return findNonce(hash, newNonce, countDown);
@@ -120,21 +121,24 @@ const findNonce = async (hash, nonce = -1, delay = 3000) => {
 const postBlock = block => {};
 
 const Mod10 = data => {
-  // 1. text to unicode (ASCII)
+  // Text to unicode (ASCII)
   const unicodeString = convertLetterToNumber(data);
-  // 2. split numbers and put in array
+  // Split numbers and put in array
   const array = splitStringToArray(unicodeString);
   const filledArray = fillArray(array);
-  // 2.1 make array of arrays
+  // Make array of arrays
   const splittedArray = splitArray(filledArray);
-  // 3. Take 2 blocks from the array
-  // 4. add these blocks
-  // 5. use these 10 numbers the same way as 4. with the last 10 numbers from 3.
-  // 6. repeat 5. until all numbers have been
+  // Make 2 blocks of 10
+  // The first number is taken from both blocks
+  // these are added together
+  // modulus 10 is taken from the result
+  // This is done 10 times for all numbers from both blocks of 10 numbers.
+  // This produces a new set of 10 numbers
+  // Repeat this until 10 numbers remain
   const newCode = calculateArrayBlocks(splittedArray);
-  // 7. toString
+  // Make a new string
   const newCodeString = newCode.join('');
-  // 8. sha257
+  // Hash new string
   const hashedString = sha256(newCodeString);
   return hashedString;
 };

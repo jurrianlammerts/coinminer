@@ -18,9 +18,4 @@ describe('Mod10 test', () => {
       '00005d430ce77ad654b5309a770350bfb4cf49171c682330a2eccc98fd8853cf'
     );
   });
-  test('Find nonce', async () => {
-    const nonce = await findNonce(newString, newHash);
-    expect(nonce).toBe('3926');
-    done();
-  }, 30000);
 });

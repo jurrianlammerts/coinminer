@@ -12,18 +12,18 @@ const {
 } = require('./functions');
 
 const mine = async () => {
+  // Get data from api
   const { data } = await lastBlock();
+  // Make a string
   const string = createString(data);
+  // Hash String
   const hash = Mod10(string);
+  // Create a string without a nonce
   const stringWithoutNonce = createStringWithoutNonce(data, hash);
-  console.log('here: ' + stringWithoutNonce);
-
-  setTimeout(async () => {
-    const { finalHash, nonce } = await findNonce(stringWithoutNonce);
-  }, 1000);
-
-  // console.log(nonce);
-  // console.log(finalHash);
+  // Find nonce
+  const nonce = await findNonce(stringWithoutNonce);
+  // Post nonce
+  if (nonce) await postBlock(nonce.toString());
 };
 
 app.set('port', port);

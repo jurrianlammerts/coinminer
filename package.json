@@ -4,9 +4,7 @@
   "description": "a miner for the cmgt coin",
   "main": "dist/bundle.js",
   "scripts": {
-    "start": "npm-run-all --parallel watch:server watch:build",
-    "watch:build": "webpack --watch",
-    "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\"",
+    "start": "node src/index.js",
     "test": "jest"
   },
   "author": "Jurrian Lammerts",
@@ -17,14 +15,7 @@
     "sha256": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "babel-jest": "^24.7.1",
-    "babel-loader": "^8.0.4",
     "jest": "^24.7.1",
-    "nodemon": "^1.18.10",
-    "npm-run-all": "^4.1.5",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "nodemon": "^1.18.10"
   }
 }
